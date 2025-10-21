@@ -1,7 +1,5 @@
 package api
 
-import "github.com/knightfall22/distributed_KV/internal/store"
-
 type Command struct {
 	Kind    ComandKind `json:"kind"`
 	Key     string     `json:"key"`
@@ -13,6 +11,7 @@ type Command struct {
 type Response struct {
 	Status        string `json:"status"`
 	Key           string `json:"key"`
+	Found         bool   `json:"found"`
 	PreviousValue string `json:"previous,omitempty"`
 	Value         string `json:"value,omitempty"`
 }
@@ -28,9 +27,4 @@ const (
 
 func (c ComandKind) String() string {
 	return [...]string{"PUT", "GET", "CAS", "APPEND"}[c]
-}
-
-type ApiService struct {
-	store *store.Store
-	port  string
 }
